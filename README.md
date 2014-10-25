@@ -1,5 +1,12 @@
 
 
+# Algorytmy równoległe - PageRank
+
+* Dokument: https://github.com/malawski/ar-pagerank/blob/gh-pages/README.md
+* Slajdy: http://malawski.github.io/ar-pagerank/
+* Projekt: https://github.com/malawski/ar-pagerank 
+* `git clone https://github.com/malawski/ar-pagerank.git`
+
 # Abstrakcja równoległa RDD
 
 * RDD: Resilient Distributed Dataset
