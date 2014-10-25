@@ -1,311 +1,129 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Ar-pagerank by malawski</title>
+    <title>Algorytmy Równoległe</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="tile-view.css" type="text/css" media="screen" charset="utf-8">
+    <style type="text/css">
+         @import url(http://fonts.googleapis.com/css?family=Voces&subset=latin,latin-ext);
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+         body {
+           font-family: 'Voces';
+           font-size: 20px;
+         }
+         h1, h2, h3 {
+           font-family: 'Voces';
+           font-weight: 400;
+           margin-bottom: 0;
+         }
+         h1 { font-size: 3em; line-height: 1.2em; }
+         h2 { font-size: 2em; }
+         h3 { font-size: 1.6em; }
+         .footnote {
+           position: absolute;
+           bottom: 3em;
+         }
+         li { line-height: 1.4em; }
+         .red { color: #fa0000; }
+         .large { font-size: 2em; }
+         a, a > code {
+           color: rgb(249, 38, 114);
+           text-decoration: none;
+         }
+         code {
+           -moz-border-radius: 5px;
+           -web-border-radius: 5px;
+           background: #e7e8e2;
+           border-radius: 5px;
+           font-size: 16px;
+         }
+         .pull-left {
+           float: left;
+           width: 47%;
+         }
+         .pull-right {
+           float: right;
+           width: 47%;
+         }
+         .pull-right ~ p {
+           clear: both;
+         }
+         #slideshow .slide .content code {
+           font-size: 0.8em;
+         }
+         #slideshow .slide .content pre code {
+           font-size: 0.9em;
+           padding: 15px;
+         }
+         .inverse {
+           background: #272822;
+           color: #777872;
+           text-shadow: 0 0 20px #333;
+         }
+         .inverse h1, .inverse h2 {
+           color: #f3f3f3;
+           line-height: 0.8em;
+         }
+
+         /* Slide-specific styling */
+         #slide-inverse .footnote {
+           bottom: 12px;
+           left: 20px;
+         }
+         #slide-how .slides {
+           font-size: 0.9em;
+           position: absolute;
+           top:  151px;
+           right: 140px;
+         }
+         #slide-how .slides h3 {
+           margin-top: 0.2em;
+         }
+         #slide-how .slides .first, #slide-how .slides .second {
+           padding: 1px 20px;
+           height: 90px;
+           width: 120px;
+           -moz-box-shadow: 0 0 10px #777;
+           -webkit-box-shadow: 0 0 10px #777;
+           box-shadow: 0 0 10px #777;
+         }
+         #slide-how .slides .first {
+           background: #fff;
+           position: absolute;
+           top: 20%;
+           left: 20%;
+           z-index: 1;
+         }
+         #slide-how .slides .second {
+           position: relative;
+           background: #fff;
+           z-index: 0;
+         }
+
+         /* Two-column layout */
+         .left-column {
+           color: #777;
+           width: 20%;
+           height: 92%;
+           float: left;
+         }
+           .left-column h2:last-of-type, .left-column h3:last-child {
+             color: #000;
+           }
+         .right-column {
+           width: 75%;
+           float: right;
+           padding-top: 2em;
+         }
+       </style>
   </head>
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>Ar-pagerank</h1>
-        <p></p>
-
-        <p class="view"><a href="https://github.com/malawski/ar-pagerank">View the Project on GitHub <small>malawski/ar-pagerank</small></a></p>
-
-
-        <ul>
-          <li><a href="https://github.com/malawski/ar-pagerank/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/malawski/ar-pagerank/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/malawski/ar-pagerank">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h1>
-<a name="abstrakcja-r%C3%B3wnoleg%C5%82a-rdd" class="anchor" href="#abstrakcja-r%C3%B3wnoleg%C5%82a-rdd"><span class="octicon octicon-link"></span></a>Abstrakcja równoległa RDD</h1>
-
-<ul>
-<li>RDD: Resilient Distributed Dataset</li>
-<li><a href="https://www.cs.berkeley.edu/%7Ematei/papers/2012/nsdi_spark.pdf">https://www.cs.berkeley.edu/~matei/papers/2012/nsdi_spark.pdf</a></li>
-</ul>
-
-<hr>
-
-<h1>
-<a name="apache-spark---instalacja-i-konfiguracja" class="anchor" href="#apache-spark---instalacja-i-konfiguracja"><span class="octicon octicon-link"></span></a>Apache Spark - instalacja i konfiguracja</h1>
-
-<ul>
-<li><a href="https://spark.apache.org/downloads.html">https://spark.apache.org/downloads.html</a></li>
-<li>Spark 1.0.2</li>
-<li>Pre-build for Hadoop 2.2</li>
-<li><a href="http://d3kbcqa49mib13.cloudfront.net/spark-1.0.2-bin-hadoop2.tgz">http://d3kbcqa49mib13.cloudfront.net/spark-1.0.2-bin-hadoop2.tgz</a></li>
-</ul>
-
-<hr>
-
-<h1>
-<a name="uruchamianie-na-zeusie" class="anchor" href="#uruchamianie-na-zeusie"><span class="octicon octicon-link"></span></a>Uruchamianie na Zeusie</h1>
-
-<ul>
-<li>Należy zgłosić się do grupy <code>plgg-spark</code> przy pomocy portalu PL-Grid: <a href="https://portal.plgrid.pl/web/guest/teams">https://portal.plgrid.pl/web/guest/teams</a>
-</li>
-<li>Instrukcja: <a href="https://docs.cyfronet.pl/display/%7Eplgmyco/Hadoop+and+Spark+with+Cyfronet+PBS">https://docs.cyfronet.pl/display/~plgmyco/Hadoop+and+Spark+with+Cyfronet+PBS</a>
-</li>
-<li>Ustawienie środowiska dla zadań Spark:</li>
-</ul>
-
-<div class="highlight highlight-bash"><pre><span class="nb">source</span> <span class="nv">$PLG_GROUPS_STORAGE</span>/plgg-spark/set_env_spark-1.0.0.sh
-</pre></div>
-
-<ul>
-<li>Uruchomienie interaktywnej konsoli Spark:</li>
-</ul>
-
-<div class="highlight highlight-bash"><pre>qsub -I -q plgrid-testing -l <span class="nv">nodes</span><span class="o">=</span>1:ppn<span class="o">=</span><span class="m">12</span> <span class="nv">$SPARK_HOME</span>/bin/spark-shell
-</pre></div>
-
-<hr>
-
-<h1>
-<a name="rdd---przyk%C5%82ad-lista" class="anchor" href="#rdd---przyk%C5%82ad-lista"><span class="octicon octicon-link"></span></a>RDD - przykład lista</h1>
-
-<ul>
-<li>Tablica</li>
-</ul>
-
-<div class="highlight highlight-scala"><pre><span class="n">scala</span><span class="o">&gt;</span> <span class="k">val</span> <span class="n">listData</span> <span class="k">=</span> <span class="nc">Array</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="mi">3</span><span class="o">,</span><span class="mi">2</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">3</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">3</span><span class="o">,</span><span class="mi">4</span><span class="o">,</span><span class="mi">4</span><span class="o">,</span><span class="mi">1</span><span class="o">,</span><span class="mi">4</span><span class="o">,</span><span class="mi">2</span><span class="o">)</span>
-
-  <span class="n">listData</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="nc">Array</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">2</span><span class="o">)</span>
-</pre></div>
-
-<ul>
-<li>RDD representujące listę</li>
-</ul>
-
-<div class="highlight highlight-scala"><pre>  <span class="n">scala</span><span class="o">&gt;</span> <span class="k">val</span> <span class="n">listRDD</span> <span class="k">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="o">(</span><span class="n">listData</span><span class="o">)</span>
-
-  <span class="n">listRDD</span><span class="k">:</span> <span class="kt">org.apache.spark.rdd.RDD</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="nc">ParallelCollectionRDD</span><span class="o">[</span><span class="err">9</span><span class="o">]</span> <span class="n">at</span> <span class="n">parallelize</span> <span class="n">at</span> <span class="o">&lt;</span><span class="n">console</span><span class="k">&gt;:</span><span class="mi">14</span>
-</pre></div>
-
-<hr>
-
-<h1>
-<a name="rdd---przyk%C5%82ad-operacje-na-listach" class="anchor" href="#rdd---przyk%C5%82ad-operacje-na-listach"><span class="octicon octicon-link"></span></a>RDD - przykład operacje na listach</h1>
-
-<ul>
-<li>Operacja <code>map()</code>
-</li>
-</ul>
-
-<div class="highlight highlight-scala"><pre>  <span class="n">scala</span><span class="o">&gt;</span> <span class="k">val</span> <span class="n">squares</span> <span class="k">=</span> <span class="n">listRDD</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">x</span> <span class="k">=&gt;</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="o">)</span>
-
-  <span class="n">squares</span><span class="k">:</span> <span class="kt">org.apache.spark.rdd.RDD</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="nc">MappedRDD</span><span class="o">[</span><span class="err">10</span><span class="o">]</span> <span class="n">at</span> <span class="n">map</span> <span class="n">at</span> <span class="o">&lt;</span><span class="n">console</span><span class="k">&gt;:</span><span class="mi">16</span>
-</pre></div>
-
-<ul>
-<li>Przekształcenie w tablicę (np. do wypisania)</li>
-</ul>
-
-<div class="highlight highlight-scala"><pre>  <span class="n">scala</span><span class="o">&gt;</span> <span class="n">squares</span><span class="o">.</span><span class="n">collect</span>
-
-  <span class="n">res5</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="nc">Array</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">9</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">9</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">9</span><span class="o">,</span> <span class="mi">16</span><span class="o">,</span> <span class="mi">16</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="mi">16</span><span class="o">,</span> <span class="mi">4</span><span class="o">)</span>
-</pre></div>
-
-<ul>
-<li>Operacja <code>reduce()</code>
-</li>
-</ul>
-
-<div class="highlight highlight-scala"><pre>  <span class="n">scala</span><span class="o">&gt;</span> <span class="n">squares</span><span class="o">.</span><span class="n">reduce</span><span class="o">(</span><span class="k">_</span><span class="o">+</span><span class="k">_</span><span class="o">)</span>
-  <span class="n">res6</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">87</span>
-</pre></div>
-
-<hr>
-
-<h1>
-<a name="rdd---przyk%C5%82ad-plik" class="anchor" href="#rdd---przyk%C5%82ad-plik"><span class="octicon octicon-link"></span></a>RDD - przykład plik</h1>
-
-<ul>
-<li>Wczytanie pliku</li>
-</ul>
-
-<div class="highlight highlight-scala"><pre>  <span class="n">scala</span><span class="o">&gt;</span> <span class="k">val</span> <span class="n">textFile</span> <span class="k">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">textFile</span><span class="o">(</span><span class="s">"/etc/passwd"</span><span class="o">)</span>
-
-  <span class="n">textFile</span><span class="k">:</span> <span class="kt">org.apache.spark.rdd.RDD</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="nc">MappedRDD</span><span class="o">[</span><span class="err">1</span><span class="o">]</span> <span class="n">at</span> <span class="n">textFile</span> <span class="n">at</span> <span class="o">&lt;</span><span class="n">console</span><span class="k">&gt;:</span><span class="mi">12</span>
-</pre></div>
-
-<ul>
-<li>Ilość linii</li>
-</ul>
-
-<div class="highlight highlight-scala"><pre>  <span class="n">scala</span><span class="o">&gt;</span><span class="n">textFile</span><span class="o">.</span><span class="n">count</span><span class="o">()</span> <span class="c1">// Number of items in this RDD</span>
-
-  <span class="n">res1</span><span class="k">:</span> <span class="kt">Long</span> <span class="o">=</span> <span class="mi">41</span>
-</pre></div>
-
-<hr>
-
-<h1>
-<a name="rdd---przyk%C5%82ad-linie-w-pliku" class="anchor" href="#rdd---przyk%C5%82ad-linie-w-pliku"><span class="octicon octicon-link"></span></a>RDD - przykład linie w pliku</h1>
-
-<ul>
-<li>Filtrowanie linii zawierających <code>bash</code>
-</li>
-</ul>
-
-<div class="highlight highlight-scala"><pre>  <span class="n">scala</span><span class="o">&gt;</span> <span class="k">val</span> <span class="n">linesWithBash</span> <span class="k">=</span> <span class="n">textFile</span><span class="o">.</span><span class="n">filter</span><span class="o">(</span><span class="n">line</span> <span class="k">=&gt;</span> <span class="n">line</span><span class="o">.</span><span class="n">contains</span><span class="o">(</span><span class="s">"bash"</span><span class="o">))</span>
-
-  <span class="n">linesWithBash</span><span class="k">:</span> <span class="kt">org.apache.spark.rdd.RDD</span><span class="o">[</span><span class="kt">String</span><span class="o">]</span> <span class="k">=</span> <span class="nc">FilteredRDD</span><span class="o">[</span><span class="err">4</span><span class="o">]</span> <span class="n">at</span> <span class="n">filter</span> <span class="n">at</span> <span class="o">&lt;</span><span class="n">console</span><span class="k">&gt;:</span><span class="mi">14</span>
-</pre></div>
-
-<ul>
-<li>Zliczanie linii zawierających <code>bash</code>
-</li>
-</ul>
-
-<div class="highlight highlight-scala"><pre>  <span class="n">scala</span><span class="o">&gt;</span> <span class="n">linesWithBash</span><span class="o">.</span><span class="n">count</span>
-
-  <span class="n">res2</span><span class="k">:</span> <span class="kt">Long</span> <span class="o">=</span> <span class="mi">3</span>
-</pre></div>
-
-<hr>
-
-<h1>
-<a name="pagerank" class="anchor" href="#pagerank"><span class="octicon octicon-link"></span></a>PageRank</h1>
-
-<ul>
-<li>Brin, S.; Page, L. (1998). "The anatomy of a large-scale hypertextual Web search engine". Computer Networks and ISDN Systems 30: 107–117. doi:10.1016/S0169-7552(98)00110-X. ISSN 0169-7552. <a href="http://infolab.stanford.edu/pub/papers/google.pdf">http://infolab.stanford.edu/pub/papers/google.pdf</a>
-</li>
-<li>Ian Rogers, Pagerank Explained Correctly with Examples: <a href="http://www.cs.princeton.edu/%7Echazelle/courses/BIB/pagerank.htm">http://www.cs.princeton.edu/~chazelle/courses/BIB/pagerank.htm</a>
-</li>
-<li><code>PR(A) = (1-d) + d (PR(T1)/C(T1) + ... + PR(Tn)/C(Tn))</code></li>
-<li><code>d = 0.85</code></li>
-</ul>
-
-<p><img src="http://upload.wikimedia.org/wikipedia/commons/thumb/6/69/PageRank-hi-res.png/320px-PageRank-hi-res.png" alt="PageRank cartoon"></p>
-
-<hr>
-
-<h1>
-<a name="pagerank---algorytm" class="anchor" href="#pagerank---algorytm"><span class="octicon octicon-link"></span></a>PageRank - algorytm</h1>
-
-<ol>
-<li>Każdy węzeł zaczyna z <code>PR = 1</code>
-</li>
-<li>W każdym kroku węzeł <code>p</code> przekazuje <code>PR(p)/C(p)</code> swoim sąsiadom, gdzie <code>C(p)</code> to ilość sąsiadów</li>
-<li>Nowa wartość <code>PR = 0.15 + 0.85 * Sum(contribs)</code>
-</li>
-</ol>
-
-<p><img src="PageRank.png" alt="PageRank"></p>
-
-<p><a href="http://ampcamp.berkeley.edu/wp-content/uploads/2012/06/matei-zaharia-part-2-amp-camp-2012-standalone-programs.pdf">http://ampcamp.berkeley.edu/wp-content/uploads/2012/06/matei-zaharia-part-2-amp-camp-2012-standalone-programs.pdf</a></p>
-
-<hr>
-
-<h1>
-<a name="pagerank---przyk%C5%82ad-1" class="anchor" href="#pagerank---przyk%C5%82ad-1"><span class="octicon octicon-link"></span></a>PageRank - przykład (1)</h1>
-
-<div class="highlight highlight-scala"><pre><span class="k">import</span> <span class="nn">org.apache.spark.SparkContext</span>
-<span class="k">import</span> <span class="nn">org.apache.spark.SparkContext._</span>
-<span class="k">import</span> <span class="nn">org.apache.spark.SparkConf</span>
-
-<span class="k">object</span> <span class="nc">SimplePageRank</span> <span class="o">{</span>
-  <span class="k">def</span> <span class="n">main</span><span class="o">(</span><span class="n">args</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span> <span class="o">{</span>
-    <span class="k">val</span> <span class="nc">ITERATIONS</span> <span class="k">=</span> <span class="mi">10</span>
-
-    <span class="k">val</span> <span class="n">conf</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">SparkConf</span><span class="o">().</span><span class="n">setAppName</span><span class="o">(</span><span class="s">"Simple PageRank"</span><span class="o">)</span>
-    <span class="k">val</span> <span class="n">sc</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">SparkContext</span><span class="o">(</span><span class="n">conf</span><span class="o">)</span>
-</pre></div>
-
-<hr>
-
-<h1>
-<a name="pagerank---przyk%C5%82ad-2" class="anchor" href="#pagerank---przyk%C5%82ad-2"><span class="octicon octicon-link"></span></a>PageRank - przykład (2)</h1>
-
-<div class="highlight highlight-scala"><pre>    <span class="c1">//  Prepare data</span>
-    <span class="k">val</span> <span class="n">linksData</span> <span class="k">=</span> <span class="nc">Array</span><span class="o">((</span><span class="s">"a"</span><span class="o">,</span><span class="s">"c"</span><span class="o">),(</span><span class="s">"b"</span><span class="o">,</span><span class="s">"a"</span><span class="o">),(</span><span class="s">"c"</span><span class="o">,</span><span class="s">"a"</span><span class="o">),(</span><span class="s">"c"</span><span class="o">,</span><span class="s">"d"</span><span class="o">),(</span><span class="s">"d"</span><span class="o">,</span><span class="s">"a"</span><span class="o">),(</span><span class="s">"d"</span><span class="o">,</span><span class="s">"b"</span><span class="o">))</span>
-
-    <span class="c1">//  RDD of (url, url) pairs</span>
-    <span class="c1">//  RDD[(String, String)]</span>
-    <span class="k">val</span> <span class="n">linksRDD</span> <span class="k">=</span> <span class="n">sc</span><span class="o">.</span><span class="n">parallelize</span><span class="o">(</span><span class="n">linksData</span><span class="o">)</span>
-
-    <span class="c1">//  RDD of (url, neighbors) pairs</span>
-    <span class="c1">//  RDD[(String, Iterable[String])]</span>
-    <span class="k">val</span> <span class="n">links</span> <span class="k">=</span> <span class="n">linksRDD</span><span class="o">.</span><span class="n">distinct</span><span class="o">().</span><span class="n">groupByKey</span><span class="o">().</span><span class="n">cache</span><span class="o">()</span>
-
-    <span class="c1">// RDD of (url, rank) pairs</span>
-    <span class="c1">// RDD[(String, Double)]</span>
-    <span class="c1">// Pass each value in the key-value pair RDD through a map function without changing the keys; </span>
-    <span class="c1">// this also retains the original RDD's partitioning.</span>
-    <span class="k">var</span> <span class="n">ranks</span> <span class="k">=</span> <span class="n">links</span><span class="o">.</span><span class="n">mapValues</span><span class="o">(</span><span class="n">v</span> <span class="k">=&gt;</span> <span class="mf">1.0</span><span class="o">)</span>   
-</pre></div>
-
-<hr>
-
-<h1>
-<a name="pagerank---przyk%C5%82ad-3" class="anchor" href="#pagerank---przyk%C5%82ad-3"><span class="octicon octicon-link"></span></a>PageRank - przykład (3)</h1>
-
-<div class="highlight highlight-scala"><pre>    <span class="k">for</span> <span class="o">(</span><span class="n">i</span> <span class="k">&lt;-</span> <span class="mi">1</span> <span class="n">to</span> <span class="nc">ITERATIONS</span><span class="o">)</span> <span class="o">{</span>
-      <span class="k">val</span> <span class="n">contribs</span> <span class="k">=</span> <span class="n">links</span><span class="o">.</span><span class="n">join</span><span class="o">(</span><span class="n">ranks</span><span class="o">).</span><span class="n">values</span><span class="o">.</span><span class="n">flatMap</span> <span class="o">{</span>
-        <span class="k">case</span> <span class="o">(</span><span class="n">urls</span><span class="o">,</span> <span class="n">rank</span><span class="o">)</span> <span class="k">=&gt;</span>
-          <span class="k">val</span> <span class="n">size</span> <span class="k">=</span> <span class="n">urls</span><span class="o">.</span><span class="n">size</span>
-          <span class="n">urls</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">url</span> <span class="k">=&gt;</span> <span class="o">(</span><span class="n">url</span><span class="o">,</span> <span class="n">rank</span> <span class="o">/</span> <span class="n">size</span><span class="o">))</span>
-      <span class="o">}</span>
-      <span class="n">ranks</span> <span class="k">=</span> <span class="n">contribs</span><span class="o">.</span><span class="n">reduceByKey</span><span class="o">(</span><span class="k">_</span> <span class="o">+</span> <span class="k">_</span><span class="o">).</span><span class="n">mapValues</span><span class="o">(</span><span class="mf">0.15</span> <span class="o">+</span> <span class="mf">0.85</span> <span class="o">*</span> <span class="k">_</span><span class="o">)</span>
-    <span class="o">}</span>
-
-    <span class="c1">// Return an array that contains all of the elements in this RDD.</span>
-    <span class="k">val</span> <span class="n">output</span> <span class="k">=</span> <span class="n">ranks</span><span class="o">.</span><span class="n">collect</span><span class="o">()</span>
-
-    <span class="n">output</span><span class="o">.</span><span class="n">foreach</span><span class="o">(</span><span class="n">tup</span> <span class="k">=&gt;</span> <span class="n">println</span><span class="o">(</span><span class="n">tup</span><span class="o">.</span><span class="n">_1</span> <span class="o">+</span> <span class="s">" has rank: "</span> <span class="o">+</span> <span class="n">tup</span><span class="o">.</span><span class="n">_2</span> <span class="o">+</span> <span class="s">"."</span><span class="o">))</span>
-
-    <span class="n">sc</span><span class="o">.</span><span class="n">stop</span><span class="o">()</span>
-  <span class="o">}</span>
-<span class="o">}</span>
-</pre></div>
-
-<hr>
-
-<h1>
-<a name="pagerank---przyk%C5%82ad-z-wczytywaniem-z-pliku" class="anchor" href="#pagerank---przyk%C5%82ad-z-wczytywaniem-z-pliku"><span class="octicon octicon-link"></span></a>PageRank - przykład z wczytywaniem z pliku:</h1>
-
-<div class="highlight highlight-scala"><pre><span class="k">package</span> <span class="nn">org.apache.spark.examples</span>
-
-<span class="k">import</span> <span class="nn">org.apache.spark.SparkContext._</span>
-<span class="k">import</span> <span class="nn">org.apache.spark.</span><span class="o">{</span><span class="nc">SparkConf</span><span class="o">,</span> <span class="nc">SparkContext</span><span class="o">}</span>
-
-<span class="k">object</span> <span class="nc">SparkPageRank</span> <span class="o">{</span>
-  <span class="k">def</span> <span class="n">main</span><span class="o">(</span><span class="n">args</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span> <span class="o">{</span>
-    <span class="k">if</span> <span class="o">(</span><span class="n">args</span><span class="o">.</span><span class="n">length</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
-      <span class="nc">System</span><span class="o">.</span><span class="n">err</span><span class="o">.</span><span class="n">println</span><span class="o">(</span><span class="s">"Usage: SparkPageRank &lt;file&gt; &lt;iter&gt;"</span><span class="o">)</span>
-      <span class="nc">System</span><span class="o">.</span><span class="n">exit</span><span class="o">(</span><span class="mi">1</span><span class="o">)</span>
-    <span class="o">}</span>
-    <span class="k">val</span> <span class="n">sparkConf</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">SparkConf</span><span class="o">().</span><span class="n">setAppName</span><span class="o">(</span><span class="s">"PageRank"</span><span class="o">)</span>
-    <span class="k">val</span> <span class="n">iters</span> <span class="k">=</span> <span class="k">if</span> <span class="o">(</span><span class="n">args</span><span class="o">.</span><span class="n">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="o">)</span> <span class="n">args</span><span class="o">(</span><span class="mi">1</span><span class="o">).</span><span class="n">toInt</span> <span class="k">else</span> <span class="mi">10</span>
-    <span class="k">val</span> <span class="n">ctx</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">SparkContext</span><span class="o">(</span><span class="n">sparkConf</span><span class="o">)</span>
-    <span class="k">val</span> <span class="n">lines</span> <span class="k">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">textFile</span><span class="o">(</span><span class="n">args</span><span class="o">(</span><span class="mi">0</span><span class="o">),</span> <span class="mi">1</span><span class="o">)</span>
-    <span class="k">val</span> <span class="n">links</span> <span class="k">=</span> <span class="n">lines</span><span class="o">.</span><span class="n">map</span><span class="o">{</span> <span class="n">s</span> <span class="k">=&gt;</span>
-      <span class="k">val</span> <span class="n">parts</span> <span class="k">=</span> <span class="n">s</span><span class="o">.</span><span class="n">split</span><span class="o">(</span><span class="s">"\\s+"</span><span class="o">)</span>
-      <span class="o">(</span><span class="n">parts</span><span class="o">(</span><span class="mi">0</span><span class="o">),</span> <span class="n">parts</span><span class="o">(</span><span class="mi">1</span><span class="o">))</span>
-    <span class="o">}.</span><span class="n">distinct</span><span class="o">().</span><span class="n">groupByKey</span><span class="o">().</span><span class="n">cache</span><span class="o">()</span>
-</pre></div>
-
-<p><a href="https://github.com/apache/spark/blob/master/examples/src/main/scala/org/apache/spark/examples/SparkPageRank.scala">https://github.com/apache/spark/blob/master/examples/src/main/scala/org/apache/spark/examples/SparkPageRank.scala</a></p>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/malawski">malawski</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
-    </div>
-    <script src="javascripts/scale.fix.js"></script>
-    
-  </body>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="http://gnab.github.io/remark/downloads/remark-0.7.0.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+    var slideshow = remark.create({highlightStyle: 'monokai', ratio: '16:9', sourceUrl: "README.md"});
+  </script>
+  
+</body>
 </html>
