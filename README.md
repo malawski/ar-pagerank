@@ -228,3 +228,86 @@ object SparkPageRank {
 
 https://github.com/apache/spark/blob/master/examples/src/main/scala/org/apache/spark/examples/SparkPageRank.scala
 
+---
+
+## Budowanie projektu
+
+* Zainstalować SBT: http://www.scala-sbt.org/0.13/tutorial/Manual-Installation.html
+* `export PATH=$PATH:~/bin`
+* `git clone https://github.com/malawski/ar-pagerank.git`
+* `cd ar-pagerank`
+* `sbt package`
+* Testowe uruchomienie lokalne na UI:
+```bash
+  $SPARK_HOME/bin/spark-submit --class SimplePageRank --master local[*] \ 
+  ~/ar-pagerank/target/scala-2.10/sparkpagerank_2.10-1.0.jar
+```
+
+---
+
+## Uruchamianie na zeusie przez PBS
+
+* Uruchamianie przez PBS na 1 węźle:
+
+Skrypt `submit-pagerank-local.sh`
+```bash
+#!/bin/env bash
+#PBS -l nodes=1:ppn=12
+ 
+source $PLG_GROUPS_STORAGE/plgg-spark/set_env_spark-1.0.0.sh
+$SPARK_HOME/bin/spark-submit --class SimplePageRank --master local[*] $HOME/ar-pagerank/target/scala-2.10/sparkpagerank_2.10-1.0.jar
+```
+
+* `qsub -q l_short submit-pagerank-local.sh`
+* wyniki są w pliku, np. `submit-pagerank-local.sh.o53251161`
+
+```bash
+cat submit-pagerank-local.sh.o53251161 
+a has rank: 1.4313779845858583.
+b has rank: 0.4633039012638519.
+c has rank: 1.3758228705372555.
+d has rank: 0.7294952436130331.
+```
+
+
+---
+
+## Uruchamianie przez PBS na wielu węzłach
+
+* Skrypt `submit-pagerank-multi.sh`
+    * Utworzenie klastra Spark
+    * Zlecenie zadania
+    * Zamknięcie klastra Spark
+
+```bash
+#!/bin/env bash
+#PBS -l nodes=3:ppn=12
+ 
+source $PLG_GROUPS_STORAGE/plgg-spark/set_env_spark-1.0.0.sh
+$SPARK_HOME/sbin/start-multinode-spark-cluster.sh
+$SPARK_HOME/bin/spark-submit --master spark://$HOSTNAME:7077 \
+    --class SimplePageRank  $HOME/ar-pagerank/target/scala-2.10/sparkpagerank_2.10-1.0.jar 
+$SPARK_HOME/sbin/stop-multinode-spark-cluster.sh
+```
+* `qsub -q l_short submit-pagerank-multi.sh`
+
+---
+
+## Uruchamianie przez PBS na wielu węzłach - wynik
+
+
+Wynik:
+
+```bash
+-- Starting Spark Master on Headnode
+-- Starting Workers on remote nodes
+...
+Spark cluster has been setup !
+d has rank: 0.7294952436130331.
+b has rank: 0.4633039012638519.
+a has rank: 1.4313779845858583.
+c has rank: 1.3758228705372553.
+-- Stopping Workers on remote nodes
+...
+-- Stopping Master on Headnode
+```
