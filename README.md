@@ -139,6 +139,8 @@ http://ampcamp.berkeley.edu/wp-content/uploads/2012/06/matei-zaharia-part-2-amp-
 
 ## PageRank - przykład (1)
 
+https://github.com/malawski/ar-pagerank/blob/master/src/main/scala/SimplePageRank.scala
+
 ```scala
 import org.apache.spark.SparkContext
 import org.apache.spark.SparkContext._
