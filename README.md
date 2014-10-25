@@ -49,7 +49,7 @@ scala> val listData = Array(1,3,2,1,3,1,3,4,4,1,4,2)
   
   listData: Array[Int] = Array(1, 3, 2, 1, 3, 1, 3, 4, 4, 1, 4, 2)
 ```
-* RDD representujące listę
+* RDD reprezentujące listę
 ```scala
   scala> val listRDD = sc.parallelize(listData)
 
