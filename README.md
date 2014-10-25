@@ -242,25 +242,29 @@ https://github.com/apache/spark/blob/master/examples/src/main/scala/org/apache/s
   $SPARK_HOME/bin/spark-submit --class SimplePageRank --master local[*] \ 
   ~/ar-pagerank/target/scala-2.10/sparkpagerank_2.10-1.0.jar
 ```
+* Uruchamianie przykładu z plikiem:
+```bash
+  $SPARK_HOME/bin/spark-submit --class SparkPageRank --master local[*] \
+  $HOME/ar-pagerank/target/scala-2.10/sparkpagerank_2.10-1.0.jar \
+  $HOME/ar-pagerank/src/main/resources/links.txt 10
+```
+
 
 ---
 
 ## Uruchamianie na zeusie przez PBS
 
-* Uruchamianie przez PBS na 1 węźle:
-
-Skrypt `submit-pagerank-local.sh`
+* Uruchamianie przez PBS na 1 węźle, skrypt `submit-pagerank-local.sh`:
 ```bash
-#!/bin/env bash
-#PBS -l nodes=1:ppn=12
+  #!/bin/env bash
+  #PBS -l nodes=1:ppn=12
  
-source $PLG_GROUPS_STORAGE/plgg-spark/set_env_spark-1.0.0.sh
-$SPARK_HOME/bin/spark-submit --class SimplePageRank --master local[*] $HOME/ar-pagerank/target/scala-2.10/sparkpagerank_2.10-1.0.jar
+  source $PLG_GROUPS_STORAGE/plgg-spark/set_env_spark-1.0.0.sh
+  $SPARK_HOME/bin/spark-submit --class SimplePageRank --master local[*] $HOME/ar-pagerank/target/scala-2.10/sparkpagerank_2.10-1.0.jar
 ```
 
 * `qsub -q l_short submit-pagerank-local.sh`
 * wyniki są w pliku, np. `submit-pagerank-local.sh.o53251161`
-
 ```bash
 cat submit-pagerank-local.sh.o53251161 
 a has rank: 1.4313779845858583.
@@ -269,6 +273,7 @@ c has rank: 1.3758228705372555.
 d has rank: 0.7294952436130331.
 ```
 
+* Przykład z plikem wejściowym `qsub -q l_short submit-pagerank-file.sh`
 
 ---
 
