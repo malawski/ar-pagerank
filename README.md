@@ -7,14 +7,16 @@
 * Projekt: https://github.com/malawski/ar-pagerank 
 * `git clone https://github.com/malawski/ar-pagerank.git`
 
-# Abstrakcja równoległa RDD
+---
+
+## Abstrakcja równoległa RDD
 
 * RDD: Resilient Distributed Dataset
 * https://www.cs.berkeley.edu/~matei/papers/2012/nsdi_spark.pdf
 
 ---
 
-# Apache Spark - instalacja i konfiguracja
+## Apache Spark - instalacja i konfiguracja
 
 * https://spark.apache.org/downloads.html
 * Spark 1.0.2
@@ -23,7 +25,7 @@
 
 ---
 
-# Uruchamianie na Zeusie
+## Uruchamianie na Zeusie
 
 * Należy zgłosić się do grupy `plgg-spark` przy pomocy portalu PL-Grid: https://portal.plgrid.pl/web/guest/teams
 * Instrukcja: https://docs.cyfronet.pl/display/~plgmyco/Hadoop+and+Spark+with+Cyfronet+PBS
@@ -39,7 +41,7 @@ qsub -I -q plgrid-testing -l nodes=1:ppn=12 $SPARK_HOME/bin/spark-shell
 
 ---
 
-# RDD - przykład lista
+## RDD - przykład lista
 
 * Tablica
 ```scala
@@ -55,7 +57,7 @@ scala> val listData = Array(1,3,2,1,3,1,3,4,4,1,4,2)
 ```
 ---
 
-# RDD - przykład operacje na listach
+## RDD - przykład operacje na listach
 
 * Operacja `map()`
 ```scala
@@ -78,7 +80,7 @@ scala> val listData = Array(1,3,2,1,3,1,3,4,4,1,4,2)
 
 ---
 
-# RDD - przykład plik
+## RDD - przykład plik
 
 * Wczytanie pliku
 ```scala
@@ -95,7 +97,7 @@ scala> val listData = Array(1,3,2,1,3,1,3,4,4,1,4,2)
 
 ---
 
-# RDD - przykład linie w pliku
+## RDD - przykład linie w pliku
 
 
 * Filtrowanie linii zawierających `bash`
@@ -112,7 +114,7 @@ scala> val listData = Array(1,3,2,1,3,1,3,4,4,1,4,2)
 ```
 
 ---
-# PageRank
+## PageRank
 
 * Brin, S.; Page, L. (1998). "The anatomy of a large-scale hypertextual Web search engine". Computer Networks and ISDN Systems 30: 107–117. doi:10.1016/S0169-7552(98)00110-X. ISSN 0169-7552. http://infolab.stanford.edu/pub/papers/google.pdf
 * Ian Rogers, Pagerank Explained Correctly with Examples: http://www.cs.princeton.edu/~chazelle/courses/BIB/pagerank.htm
@@ -123,7 +125,7 @@ scala> val listData = Array(1,3,2,1,3,1,3,4,4,1,4,2)
 
 
 ---
-# PageRank - algorytm
+## PageRank - algorytm
 
 1. Każdy węzeł zaczyna z `PR = 1`
 2. W każdym kroku węzeł `p` przekazuje `PR(p)/C(p)` swoim sąsiadom, gdzie `C(p)` to ilość sąsiadów
@@ -135,7 +137,7 @@ http://ampcamp.berkeley.edu/wp-content/uploads/2012/06/matei-zaharia-part-2-amp-
 
 ---
 
-# PageRank - przykład (1)
+## PageRank - przykład (1)
 
 ```scala
 import org.apache.spark.SparkContext
@@ -151,7 +153,7 @@ object SimplePageRank {
 ```    
 ---
 
-# PageRank - przykład (2)
+## PageRank - przykład (2)
 
 ```scala
     //  Prepare data
@@ -174,7 +176,7 @@ object SimplePageRank {
 
 ---
 
-# PageRank - przykład (3)
+## PageRank - przykład (3)
 
 ```scala
     for (i <- 1 to ITERATIONS) {
@@ -198,7 +200,7 @@ object SimplePageRank {
 
 ---
 
-# PageRank - przykład z wczytywaniem z pliku:
+## PageRank - przykład z wczytywaniem z pliku:
 
 ```scala
 package org.apache.spark.examples
