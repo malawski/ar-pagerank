@@ -319,3 +319,10 @@ c has rank: 1.3758228705372553.
 ...
 -- Stopping Master on Headnode
 ```
+
+
+---
+
+## Dodatkowa konfiguracja klastra Spark
+
+* Zwiększanie limitów pamięci: https://docs.cyfronet.pl/display/PLGDoc/Dokumentacja+Hadoop+oraz+Spark+w+Cyfronet#DokumentacjaHadooporazSparkwCyfronet-Dostrajaniekonfiguracji
