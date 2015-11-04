@@ -19,25 +19,29 @@
 ## Apache Spark - instalacja i konfiguracja
 
 * https://spark.apache.org/downloads.html
-* Spark 1.0.2
-* Pre-build for Hadoop 2.2
-* http://d3kbcqa49mib13.cloudfront.net/spark-1.0.2-bin-hadoop2.tgz
+* Spark 1.5.1
+* Pre-build for Hadoop 2.6
+* http://d3kbcqa49mib13.cloudfront.net/spark-1.5.1-bin-hadoop2.6.tgz
 
 ---
 
 ## Uruchamianie na Zeusie
 
-* Należy zgłosić się do grupy `plgg-spark` przy pomocy portalu PL-Grid: https://portal.plgrid.pl/web/guest/teams
-* Instrukcja: https://docs.cyfronet.pl/display/~plgmyco/Hadoop+and+Spark+with+Cyfronet+PBS
+* Należy aktywować usługę `Spark` przy pomocy portalu PL-Grid w zakładce "Moje konto"
+* Instrukcja: https://docs.cyfronet.pl/display/PLGDoc/Spark
+* Korzystanie ze środowiska Spark wymaga uruchomienia zadania przez PBS i postawienia klastra Spark na uzyskanych wezłach.
 * Ustawienie środowiska dla zadań Spark:
 ```bash
-source $PLG_GROUPS_STORAGE/plgg-spark/set_env_spark-1.0.0.sh
+module load plgrid/apps/spark
 ```
 * Uruchomienie interaktywnej konsoli Spark:
 ```bash
-qsub -I -q plgrid-testing -l nodes=1:ppn=12 $SPARK_HOME/bin/spark-shell
+qsub -I -q plgrid-testing -l nodes=1:ppn=12
+module load plgrid/apps/spark
+start-multinode-spark-cluster.sh
+$SPARK_HOME/bin/spark-shell
+stop-multinode-spark-cluster.sh
 ```
-
 
 ---
 
@@ -239,7 +243,7 @@ https://github.com/apache/spark/blob/master/examples/src/main/scala/org/apache/s
 * `sbt package`
 * Testowe uruchomienie lokalne na UI:
 ```bash
-  $SPARK_HOME/bin/spark-submit --class SimplePageRank --master local[*] \ 
+  $SPARK_HOME/bin/spark-submit --class SimplePageRank --master local[*] \
   ~/ar-pagerank/target/scala-2.10/sparkpagerank_2.10-1.0.jar
 ```
 * Uruchamianie przykładu z plikiem:
@@ -258,12 +262,11 @@ https://github.com/apache/spark/blob/master/examples/src/main/scala/org/apache/s
 ```bash
   #!/bin/env bash
   #PBS -l nodes=1:ppn=12
- 
-  source $PLG_GROUPS_STORAGE/plgg-spark/set_env_spark-1.0.0.sh
+  module load plgrid/apps/spark
   $SPARK_HOME/bin/spark-submit --class SimplePageRank --master local[*] $HOME/ar-pagerank/target/scala-2.10/sparkpagerank_2.10-1.0.jar
 ```
 
-* `qsub -q l_short submit-pagerank-local.sh`
+* `qsub -q plgrid-testing submit-pagerank-local.sh`
 * wyniki są w pliku, np. `submit-pagerank-local.sh.o53251161`
 ```bash
 cat submit-pagerank-local.sh.o53251161 
@@ -273,7 +276,7 @@ c has rank: 1.3758228705372555.
 d has rank: 0.7294952436130331.
 ```
 
-* Przykład z plikem wejściowym `qsub -q l_short submit-pagerank-file.sh`
+* Przykład z plikem wejściowym `qsub -q plgrid-testing submit-pagerank-file.sh`
 
 ---
 
@@ -294,7 +297,7 @@ $SPARK_HOME/bin/spark-submit --master spark://$HOSTNAME:7077 \
     --class SimplePageRank  $HOME/ar-pagerank/target/scala-2.10/sparkpagerank_2.10-1.0.jar 
 $SPARK_HOME/sbin/stop-multinode-spark-cluster.sh
 ```
-* `qsub -q l_short submit-pagerank-multi.sh`
+* `qsub -q plgrid-testing submit-pagerank-multi.sh`
 
 ---
 
