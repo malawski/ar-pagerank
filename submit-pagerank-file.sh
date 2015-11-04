@@ -1,6 +1,5 @@
 #!/bin/env bash
 #PBS -l nodes=1:ppn=12
- 
-source $PLG_GROUPS_STORAGE/plgg-spark/set_env_spark-1.0.0.sh
+module load plgrid/apps/spark
 $SPARK_HOME/bin/spark-submit --class SparkPageRank --master local[*] $HOME/ar-pagerank/target/scala-2.10/sparkpagerank_2.10-1.0.jar $HOME/ar-pagerank/src/main/resources/links.txt 10
 
